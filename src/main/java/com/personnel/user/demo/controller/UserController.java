@@ -2,13 +2,15 @@ package com.personnel.user.demo.controller;
 
 import com.personnel.user.demo.dto.UserRequest;
 import com.personnel.user.demo.dto.UserResponse;
+import com.personnel.user.demo.dto.UserSignInRequest;
+import com.personnel.user.demo.dto.UserSignInResponse;
 import com.personnel.user.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/auth/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -29,5 +31,10 @@ public class UserController {
                                            @RequestParam(defaultValue = "0") int page,
                                            @RequestParam(defaultValue = "10") int size) {
         return userService.findAllByRole(role, page, size);
+    }
+
+    @PostMapping("/sign-in")
+    public UserSignInResponse signIn(@RequestBody UserSignInRequest user) {
+        return userService.signIn(user);
     }
 }
